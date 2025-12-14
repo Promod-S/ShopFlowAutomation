@@ -85,6 +85,7 @@ public class StandAloneTest {
         String resultText=driver.findElement(By.cssSelector(".box h1")).getText();
         System.out.println(resultText);
 
+
         Assert.assertEquals(thankYouText,resultText);
 
         driver.close();

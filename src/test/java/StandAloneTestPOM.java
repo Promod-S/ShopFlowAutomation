@@ -27,31 +27,26 @@ public class StandAloneTestPOM {
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
-//        driver.findElement(By.xpath("//input[@type= 'email']")).sendKeys("pramod123@gmail.com");
-//        driver.findElement(By.xpath("//input[@placeholder= 'enter your passsword']")).sendKeys("Test@1234");
-//        driver.findElement(By.xpath("//input[@value='Login']")).click();
-
         LandingPage landingPage=new LandingPage(driver);
         landingPage.goTo();
         landingPage.loginApplication("pramod123@gmail.com","Test@1234");
 
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[text()=' View']/parent::div/parent::div/parent::div")));
-//        List<WebElement> products= driver.findElements(By.xpath("//button[text()=' View']/parent::div/parent::div/parent::div"));
         ProductCatalogue productCatalogue=new ProductCatalogue(driver);
         List<WebElement>products= productCatalogue.getProductList();
+        productCatalogue.addProductToCart(testProduct);
+        productCatalogue.goToCartPage();
 
-
-        driver.findElement(By.xpath("(//button[text()=' Add To Cart'])[2]")).click();
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("toast-message")));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("toast-container")));
-
-        driver.findElement(By.xpath("//button[@routerlink=\'/dashboard/cart\']")).click();
-
-        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("cartWrap")));
+        //        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("cartWrap")));
 
         List<WebElement> cartProducts= driver.findElements(By.cssSelector(".cartWrap h3"));
+        Boolean isProductInCart = false;
+        for(WebElement item : cartProducts) {
+            if(item.getText().equals(testProduct)) {
+                isProductInCart = true;
+                break;
+            }
+        }
 
 //        Boolean isProductInCart= cartProducts.stream().anyMatch(item->item.getText().equals(testProduct));
 
@@ -64,13 +59,7 @@ public class StandAloneTestPOM {
 ////                break;
 ////            }
 //        }
-        Boolean isProductInCart = false;
-        for(WebElement item : cartProducts) {
-            if(item.getText().equals(testProduct)) {
-                isProductInCart = true;
-                break;
-            }
-        }
+
 
         Assert.assertTrue(isProductInCart);
         driver.findElement(By.xpath("//button[text()='Checkout']")).click();

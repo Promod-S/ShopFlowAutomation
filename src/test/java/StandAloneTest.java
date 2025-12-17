@@ -40,10 +40,9 @@ public class StandAloneTest {
 //                        prod.findElement(By.xpath(("//button[text()=' Add To Cart']")));
 //        driver.findElement(By.xpath("(//button[text()=' Add To Cart'])[2]")).click();
 
-
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.className("toast-message")));
-        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.id("toast-container")));
-
+        wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("toast-container")));
+        //ng-animating
+        wait.until(ExpectedConditions.invisibilityOfElementLocated(By.className("ng-animating")));
         driver.findElement(By.xpath("//button[@routerlink=\'/dashboard/cart\']")).click();
 
         wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("cartWrap")));

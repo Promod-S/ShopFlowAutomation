@@ -17,25 +17,19 @@ public class StandAloneTestPOM {
         WebDriverManager.chromedriver().setup();
         WebDriver driver= new ChromeDriver();
         String testProduct= "ADIDAS ORIGINAL";
-
         //automate the login page for https://rahulshettyacademy.com/client
         //        pramod123@gmail.com
         //        pwd- Test@1234
-
-//        driver.get("https://rahulshettyacademy.com/client");
         driver.manage().window().maximize();
         driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 
         LandingPage landingPage=new LandingPage(driver);
         landingPage.goTo();
         ProductCatalogue productCatalogue=landingPage.loginApplication("pramod123@gmail.com","Test@1234");
-
-//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 //        ProductCatalogue productCatalogue=new ProductCatalogue(driver);
         List<WebElement>products= productCatalogue.getProductList();
         productCatalogue.addProductToCart(testProduct);
         CartPage cartPage=productCatalogue.goToCartPage();
-
 //        CartPage cartPage=new CartPage(driver);
         Boolean match=cartPage.isProductInCart(testProduct);
         Assert.assertTrue(match);
@@ -45,20 +39,6 @@ public class StandAloneTestPOM {
         String resultText= confirmationPage.getConfirmationMessage();
 //        String thankYouText="THANKYOU FOR THE ORDER.";
 //        Assert.assertEquals(thankYouText,resultText);
-
-//        driver.findElement(By.xpath("//button[text()='Checkout']")).click();
-
-//        driver.findElement(By.xpath("//input[@placeholder='Select Country']")).sendKeys("IND");
-//        driver.findElement(By.xpath("//span[text()=' India']")).click();
-//        Actions act= new Actions(driver);
-//        act.moveToElement(driver.findElement(By.cssSelector(".action__submit"))).click().build().perform();
-
-
-
-//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".box h1")));
-//        String resultText=driver.findElement(By.cssSelector(".box h1")).getText();
-//        System.out.println(resultText);
-
 //          OR
         Assert.assertTrue(resultText.equals("THANKYOU FOR THE ORDER."));
 

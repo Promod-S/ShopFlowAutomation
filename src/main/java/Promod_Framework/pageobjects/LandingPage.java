@@ -1,7 +1,6 @@
 package Promod_Framework.pageobjects;
 
 import Promod_Framework.AbstractComponents.AbstractComponents;
-import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,10 +27,12 @@ public class LandingPage extends AbstractComponents {
     @FindBy(xpath="//input[@value='Login']")
     WebElement submit;
 
-    public void loginApplication(String email,String password){
+    public ProductCatalogue loginApplication(String email, String password){
         userEmail.sendKeys(email);
         userPassword.sendKeys(password);
         submit.click();
+        ProductCatalogue productCatalogue=new ProductCatalogue(driver);
+        return productCatalogue;
     }
 
     public void goTo(){

@@ -1,5 +1,6 @@
 package Promod_Framework.AbstractComponents;
 
+import Promod_Framework.pageobjects.CartPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -27,8 +28,10 @@ public class AbstractComponents {
         WebDriverWait wait= new WebDriverWait(driver, Duration.ofSeconds(5));
         wait.until(ExpectedConditions.invisibilityOfElementLocated(findBy));
     }
-    public void goToCartPage(){
+    public CartPage goToCartPage(){
 //        driver.findElement(By.xpath("//button[@routerlink=\'/dashboard/cart\']")).click();
         cartHeader.click();
+        CartPage cartPage=new CartPage(driver);
+        return cartPage;
     }
 }

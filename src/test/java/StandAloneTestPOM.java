@@ -1,5 +1,4 @@
-import Promod_Framework.pageobjects.LandingPage;
-import Promod_Framework.pageobjects.ProductCatalogue;
+import Promod_Framework.pageobjects.*;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -29,53 +28,40 @@ public class StandAloneTestPOM {
 
         LandingPage landingPage=new LandingPage(driver);
         landingPage.goTo();
-        landingPage.loginApplication("pramod123@gmail.com","Test@1234");
+        ProductCatalogue productCatalogue=landingPage.loginApplication("pramod123@gmail.com","Test@1234");
 
-        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        ProductCatalogue productCatalogue=new ProductCatalogue(driver);
+//        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+//        ProductCatalogue productCatalogue=new ProductCatalogue(driver);
         List<WebElement>products= productCatalogue.getProductList();
         productCatalogue.addProductToCart(testProduct);
-        productCatalogue.goToCartPage();
+        CartPage cartPage=productCatalogue.goToCartPage();
 
-        //        wait.until(ExpectedConditions.presenceOfAllElementsLocatedBy(By.className("cartWrap")));
+//        CartPage cartPage=new CartPage(driver);
+        Boolean match=cartPage.isProductInCart(testProduct);
+        Assert.assertTrue(match);
+        CheckOutPage checkOutPage=cartPage.goToCheckOut();
+        checkOutPage.setSelectCountry("ind");
+        ConfirmationPage confirmationPage=checkOutPage.submitOrder(driver);
+        String resultText= confirmationPage.getConfirmationMessage();
+//        String thankYouText="THANKYOU FOR THE ORDER.";
+//        Assert.assertEquals(thankYouText,resultText);
 
-        List<WebElement> cartProducts= driver.findElements(By.cssSelector(".cartWrap h3"));
-        Boolean isProductInCart = false;
-        for(WebElement item : cartProducts) {
-            if(item.getText().equals(testProduct)) {
-                isProductInCart = true;
-                break;
-            }
-        }
+//        driver.findElement(By.xpath("//button[text()='Checkout']")).click();
 
-//        Boolean isProductInCart= cartProducts.stream().anyMatch(item->item.getText().equals(testProduct));
-
-//        WebElement item=null;
-//        for(WebElement prod: cartProducts){
-//            if(prod.findElement(By.xpath("//h3[text()='ADIDAS ORIGINAL']")).getText()
-//            System.out.println(prod);
-////            if(prod.findElement(By.className("cartWrap")).getText().equals(testProduct)){
-////                item= prod;
-////                break;
-////            }
-//        }
+//        driver.findElement(By.xpath("//input[@placeholder='Select Country']")).sendKeys("IND");
+//        driver.findElement(By.xpath("//span[text()=' India']")).click();
+//        Actions act= new Actions(driver);
+//        act.moveToElement(driver.findElement(By.cssSelector(".action__submit"))).click().build().perform();
 
 
-        Assert.assertTrue(isProductInCart);
-        driver.findElement(By.xpath("//button[text()='Checkout']")).click();
-        driver.findElement(By.xpath("//input[@placeholder='Select Country']")).sendKeys("IND");
-        driver.findElement(By.xpath("//span[text()=' India']")).click();
-        Actions act= new Actions(driver);
-        act.moveToElement(driver.findElement(By.cssSelector(".action__submit"))).click().build().perform();
 
+//        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".box h1")));
+//        String resultText=driver.findElement(By.cssSelector(".box h1")).getText();
+//        System.out.println(resultText);
 
-        String thankYouText="THANKYOU FOR THE ORDER.";
-        wait.until(ExpectedConditions.visibilityOfElementLocated(By.cssSelector(".box h1")));
-        String resultText=driver.findElement(By.cssSelector(".box h1")).getText();
-        System.out.println(resultText);
+//          OR
+        Assert.assertTrue(resultText.equals("THANKYOU FOR THE ORDER."));
 
-
-        Assert.assertEquals(thankYouText,resultText);
 
         driver.close();
 

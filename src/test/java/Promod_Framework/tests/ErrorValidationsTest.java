@@ -12,7 +12,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class ErrorValidationsTest extends BaseTest {
-    @Test
+    @Test(groups = {"ErrorHandling"})
     public void loginErrorValidation() throws IOException {
         ProductCatalogue productCatalogue=landingPage.loginApplication("pramod123@gmail.com","Tess@1234");
 

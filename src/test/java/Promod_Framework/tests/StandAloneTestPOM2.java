@@ -14,9 +14,10 @@ import java.time.Duration;
 import java.util.List;
 
 public class StandAloneTestPOM2 extends BaseTest {
+    String testProduct= "ADIDAS ORIGINAL";
     @Test
-    public void standAloneTest() throws IOException {
-          String testProduct= "ADIDAS ORIGINAL";
+    public void submitOrderTest() throws IOException {
+
 
 //        LandingPage landingPage=new LandingPage(driver);
 //        landingPage.goTo();
@@ -32,8 +33,14 @@ public class StandAloneTestPOM2 extends BaseTest {
         ConfirmationPage confirmationPage=checkOutPage.submitOrder(driver);
         String resultText= confirmationPage.getConfirmationMessage();
         Assert.assertTrue(resultText.equals("THANKYOU FOR THE ORDER."));
+    }
+    @Test(dependsOnMethods = {"submitOrderTest"})
+    public  void orderHistoryTest(){
+        ProductCatalogue productCatalogue=landingPage.loginApplication("pramod123@gmail.com","Test@1234");
+        OrderPage orderPage= productCatalogue.goToOrderPage();
+
+        Assert.assertTrue(orderPage.verifyOrderDisplay(testProduct));
 
 
-//        driver.close();
     }
 }

@@ -1,7 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite name="All Test Suite">
-    <test verbose="2" preserve-order="true" name="Error Validations Test">
+<suite parallel="tests" name="All Test Suite">
+    <groups>
+        <run>
+            <include name="ErrorHandling"/>
+        </run>
+    </groups>
+    <test thread-count="5" verbose="2" preserve-order="true" name="Error Validations Test">
         <classes>
             <class name="Promod_Framework.tests.ErrorValidationsTest">
             <methods>
@@ -13,5 +18,5 @@
         <classes>
             <class name="Promod_Framework.tests.StandAloneTestPOM2">
                 <methods>
-                    <include name="standAloneTest"/>
+                    <include name="submitOrderTest"/>
                 </methods></class></classes></test></suite>

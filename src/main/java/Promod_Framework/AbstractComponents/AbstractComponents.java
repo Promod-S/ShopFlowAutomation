@@ -1,6 +1,7 @@
 package Promod_Framework.AbstractComponents;
 
 import Promod_Framework.pageobjects.CartPage;
+import Promod_Framework.pageobjects.OrderPage;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -19,6 +20,8 @@ public class AbstractComponents {
     }
     @FindBy(xpath="//button[@routerlink='/dashboard/cart']")
     WebElement cartHeader;
+    @FindBy(xpath = "//button[@routerlink='/dashboard/myorders']")
+    WebElement orderHeader;
 
     public void waitForElementToAppear(By findBy)    {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -37,5 +40,11 @@ public class AbstractComponents {
         cartHeader.click();
         CartPage cartPage=new CartPage(driver);
         return cartPage;
+    }
+    public OrderPage goToOrderPage(){
+        orderHeader.click();
+        OrderPage orderPage=new OrderPage(driver);
+        return orderPage;
+
     }
 }

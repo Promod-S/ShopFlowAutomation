@@ -1,17 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
-<suite parallel="tests" name="All Test Suite">
-    <test thread-count="5" verbose="2" preserve-order="true" name="Error Validations Test">
+<suite parallel="tests" name="All Test Suite" thread-count="5" >
+    <!--    <suite name="All Test Suite">-->
+    <listeners>
+        <listener class-name="Promod_Framework.TestComponents.Listeners"></listener>
+    </listeners>
+    <test verbose="2" preserve-order="true" name="Error Validations Test">
         <classes>
             <class name="Promod_Framework.tests.ErrorValidationsTest">
-            <methods>
-                <include name="loginErrorValidation"/>
-                <include name="productErrorValidation"/>
-            </methods></class>
-        </classes></test>
+                <methods>
+                    <include name="loginErrorValidation"/>
+                    <include name="productErrorValidation"/>
+                </methods>
+            </class>
+        </classes>
+    </test>
     <test name="Stand Alone Test">
         <classes>
             <class name="Promod_Framework.tests.StandAloneTestPOM2">
                 <methods>
                     <include name="submitOrderTest"/>
-                </methods></class></classes></test></suite>
+                </methods>
+            </class>
+        </classes>
+    </test>
+</suite>

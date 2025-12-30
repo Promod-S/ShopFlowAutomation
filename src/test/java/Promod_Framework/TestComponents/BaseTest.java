@@ -5,6 +5,8 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -58,9 +60,12 @@ public class BaseTest {
         });
         return data;
         //{map1, map2}
-
-
-
+    }
+    public String getScreenshot(String testCaseName,WebDriver driver) throws IOException {
+        File source= ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+        File file= new File(System.getProperty("user.dir")+"//reports//"+testCaseName+".png");
+        FileUtils.copyFile(source,file);
+        return System.getProperty("user.dir")+"//reports//"+testCaseName+".png";
     }
     @BeforeMethod(alwaysRun = true)
     public LandingPage launchApplication() throws IOException {

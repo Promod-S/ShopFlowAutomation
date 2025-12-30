@@ -2,6 +2,7 @@ package Promod_Framework.tests;
 
 
 import Promod_Framework.TestComponents.BaseTest;
+import Promod_Framework.TestComponents.Retry;
 import Promod_Framework.pageobjects.CartPage;
 import Promod_Framework.pageobjects.ProductCatalogue;
 import org.openqa.selenium.WebElement;
@@ -12,11 +13,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class ErrorValidationsTest extends BaseTest {
-    @Test(groups = {"ErrorHandling"})
+    @Test(groups = {"ErrorHandling"},retryAnalyzer = Retry.class)
     public void loginErrorValidation() throws IOException {
         ProductCatalogue productCatalogue=landingPage.loginApplication("pramod123@gmail.com","Tess@1234");
 
-        Assert.assertEquals("Incorrect email or password.",landingPage.getErrorMessage());
+//        Assert.assertEquals("Incorrect email or password.",landingPage.getErrorMessage());
+        //Interbtionally failing test so that we can catch screenshot and see in report
+        Assert.assertEquals("Incorrect email  password.",landingPage.getErrorMessage());
     }
     @Test
     public void productErrorValidation(){

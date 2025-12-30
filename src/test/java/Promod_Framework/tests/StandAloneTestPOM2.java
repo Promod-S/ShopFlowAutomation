@@ -49,11 +49,7 @@ public class StandAloneTestPOM2 extends BaseTest {
 
         Assert.assertTrue(orderPage.verifyOrderDisplay(testProduct));
     }
-    public void getScreenshot(String testCaseName) throws IOException {
-        File source= ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
-        File file= new File(System.getProperty("user.dir")+"//reports//"+testCaseName+".png");
-        FileUtils.copyFile(source,file);
-    }
+
 //    Using 2D array to send parameters
 //    @DataProvider
 //    public Object[][] getData(){

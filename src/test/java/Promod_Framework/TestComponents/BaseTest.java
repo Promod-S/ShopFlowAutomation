@@ -5,10 +5,12 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -32,8 +34,25 @@ public class BaseTest {
 //        FileInputStream fis= new FileInputStream("C:\\Users\\Promod\\IdeaProjects\\ShopFlowAutomation\\src\\main\\java\\Promod_Framework\\resources\\GlobalData.properties");
         FileInputStream fis= new FileInputStream(System.getProperty("user.dir")+"\\src\\main\\java\\Promod_Framework\\resources\\GlobalData.properties");
         prop.load(fis);
-        String browserName = prop.getProperty("browser");
+        //this code enables mvn command to choose which browser to execute
+        String browserName = System.getProperty("browser") !=null ? System.getProperty("browser") : prop.getProperty("browser");
 
+//        String browserName = prop.getProperty("browser");
+        //to run tests in headless mode
+//        if(browserName.contains("chrome")){
+//            ChromeOptions options=new ChromeOptions();
+//            WebDriverManager.chromedriver().setup();
+//
+//            if (browserName.toLowerCase().contains("headless")) {
+//                options.addArguments("--headless=new");
+//                options.addArguments("--disable-gpu");
+//            }
+//            driver=new ChromeDriver(options);
+//            //optional to avoid flakiness full screen window here
+//            driver.manage().window().setSize(new Dimension(1440,900));
+
+
+        //to run tests in headed mode
         if(browserName.equalsIgnoreCase("chrome")) {
             WebDriverManager.chromedriver().setup();
              driver = new ChromeDriver();

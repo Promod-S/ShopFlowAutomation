@@ -49,7 +49,7 @@ public class StandAloneTestPOM2 extends BaseTest {
 
         Assert.assertTrue(orderPage.verifyOrderDisplay(testProduct));
     }
-
+//  adding dummy comment to check cicd
 //    Using 2D array to send parameters
 //    @DataProvider
 //    public Object[][] getData(){
